@@ -1,0 +1,19 @@
+schema: '2.0'
+stages:
+  build_rosters:
+    cmd: python -m src.features.build_rosters
+    deps:
+    - path: data/raw/transactions.csv
+      hash: md5
+      md5: f364d68fd2f1bec1c7e7b09b53d7020c
+      size: 669
+    - path: src/features/build_rosters.py
+      hash: md5
+      md5: b3bd82e0984c78f1f6a817bc857c4a03
+      size: 2880
+    outs:
+    - path: data/interim/rosters
+      hash: md5
+      md5: d97866aa9c369d572931ee65fece24fb.dir
+      size: 14413
+      nfiles: 5

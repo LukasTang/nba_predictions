@@ -1,5 +1,5 @@
-# Data (DVC-tracked, not in git)
-/data/
+# Data is DVC-tracked: per-directory .gitignore files (written by DVC) keep the
+# actual data out of git while allowing the .dvc pointer files to be committed.
 
 # DVC
 /.dvc/cache

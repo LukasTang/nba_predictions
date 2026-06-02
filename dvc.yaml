@@ -1,0 +1,8 @@
+stages:
+  build_rosters:
+    cmd: python -m src.features.build_rosters
+    deps:
+      - data/raw/transactions.csv
+      - src/features/build_rosters.py
+    outs:
+      - data/interim/rosters
