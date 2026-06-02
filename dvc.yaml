@@ -25,3 +25,14 @@ stages:
       - src/features/build_rosters.py
     outs:
       - data/interim/rosters
+
+  player_ratings:
+    cmd: python -m src.features.player_ratings
+    deps:
+      - data/raw/boxscores
+      - src/features/player_ratings.py
+    params:
+      - ingest.season
+      - ratings
+    outs:
+      - data/processed/player_ratings.parquet

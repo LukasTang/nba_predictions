@@ -5,7 +5,9 @@ ingest:
   # from `season` because nba_api has no data for a not-yet-started season.
   season: "2024-25"
 ratings:
-  metric: bpm            # box-score-basiert zum Start, EPM/RAPM später
+  metric: box_gmsc       # transparent Game-Score-Proxy; BPM/EPM/RAPM sind dokumentierte spätere Swaps
+  per_minutes: 36        # Normalisierung der Rate
+  min_minutes: 200       # Schwelle für das `reliable`-Flag
 minutes:
   source: depth_chart
 transfer:

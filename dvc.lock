@@ -68,3 +68,27 @@ stages:
       hash: md5
       md5: bd13e36b97e6013f4983c4cfbfcb3816
       size: 81874
+  player_ratings:
+    cmd: python -m src.features.player_ratings
+    deps:
+    - path: data/raw/boxscores
+      hash: md5
+      md5: fcce945baa9d407d73efc170929e89f7.dir
+      size: 598394
+      nfiles: 1
+    - path: src/features/player_ratings.py
+      hash: md5
+      md5: cb50d7bf0bb2f9228c9ec29edbcd65d1
+      size: 3698
+    params:
+      params.yaml:
+        ingest.season: 2024-25
+        ratings:
+          metric: box_gmsc
+          per_minutes: 36
+          min_minutes: 200
+    outs:
+    - path: data/processed/player_ratings.parquet
+      hash: md5
+      md5: eece3fcbc92706e1866082e15db15788
+      size: 25579

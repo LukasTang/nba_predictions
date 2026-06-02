@@ -86,6 +86,30 @@ Waive vs. Saisonende nicht unterscheidbar — Roster-Snapshots würden das spät
 
 ---
 
+## 2026-06-02 — Erste Player Ratings, und der Sanity-Check stimmt
+
+**Auslöser:** Erster Modell-Feature-Step — Spieler-Ratings aus den schon gezogenen
+Box-Scores (`player_ratings`-Stage).
+
+**Was passiert ist:** Aus 26.306 Spieler-Spielen → ein league-zentriertes, box-score-
+basiertes Rating pro Spieler (Hollinger Game Score / 36 min, value-over-average).
+**569 Spieler, 457 davon `reliable`** (≥200 Minuten).
+
+**Sanity-Check (Top 10 reliable):**
+```
+Jokić 15.6 · Gilgeous-Alexander 14.7 · Antetokounmpo 13.9 · Williamson 11.5
+Davis 9.8 · Dončić 9.0 · Wembanyama 8.6 · Embiid 7.9 · James 7.4 · Curry 7.3
+```
+Liga-Mittel (minuten-gewichtet) = 0.0001 → Zentrierung korrekt.
+
+**Warum es zählt:** Das Rating ist eine **Spieler**-Eigenschaft (über alle Spiele, team-
+agnostisch) — exakt die Roster-Komposition-Philosophie. Die Methodik ist bewusst
+transparent und per `params.yaml` austauschbar (`box_gmsc` jetzt, BPM/EPM/RAPM später);
+dokumentiert in `docs/methodology.md`. Damit steht die Basis für Minutes-Projection und
+das minuten-gewichtete Team-Aggregat.
+
+---
+
 <!-- Nächste Story-Anker (geplant):
 - September 2026: Win-Total-Projektionen committen — die Vor-Saison-Festlegung.
 - Oktober 2026: Season Start als Drift-Validierungs-Event, Umschalten auf inseason.
