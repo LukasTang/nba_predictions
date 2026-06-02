@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/raw/transactions.csv
       hash: md5
-      md5: f364d68fd2f1bec1c7e7b09b53d7020c
-      size: 669
+      md5: 097567b9ff0f12a0b9451997280c2214
+      size: 801
     - path: src/features/build_rosters.py
       hash: md5
       md5: b3bd82e0984c78f1f6a817bc857c4a03
@@ -14,6 +14,6 @@ stages:
     outs:
     - path: data/interim/rosters
       hash: md5
-      md5: d97866aa9c369d572931ee65fece24fb.dir
-      size: 14413
-      nfiles: 5
+      md5: 0c52b7e8e4db11c4d81ab3906e034871.dir
+      size: 17305
+      nfiles: 6
