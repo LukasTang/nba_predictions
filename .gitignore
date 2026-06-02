@@ -1,0 +1,36 @@
+# Data (DVC-tracked, not in git)
+/data/
+
+# DVC
+/.dvc/cache
+/.dvc/tmp
+
+# MLflow
+/mlruns/
+/mlartifacts/
+
+# Reports / outputs
+/reports/
+metrics.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
