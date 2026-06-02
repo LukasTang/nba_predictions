@@ -1,9 +1,9 @@
 mode: offseason          # offseason | inseason
 season: "2026-27"        # the season we are modelling
 ingest:
-  # Latest completed season we can actually pull real rosters for. Kept separate
+  # Latest completed season we can actually pull game logs for. Kept separate
   # from `season` because nba_api has no data for a not-yet-started season.
-  roster_snapshot_season: "2024-25"
+  season: "2024-25"
 ratings:
   metric: bpm            # box-score-basiert zum Start, EPM/RAPM später
 minutes:

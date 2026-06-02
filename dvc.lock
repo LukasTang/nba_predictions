@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/raw/transactions.csv
       hash: md5
-      md5: b713505eda7b2deffdcfd32c501c8c68
-      size: 67998
+      md5: bd13e36b97e6013f4983c4cfbfcb3816
+      size: 81874
     - path: src/features/build_rosters.py
       hash: md5
       md5: b3bd82e0984c78f1f6a817bc857c4a03
@@ -14,9 +14,9 @@ stages:
     outs:
     - path: data/interim/rosters
       hash: md5
-      md5: a96720128b5883fdbb9b69fdaecc243d.dir
-      size: 13866
-      nfiles: 1
+      md5: 90d78eb97aee2ca2a0bab7968ac09729.dir
+      size: 1406583
+      nfiles: 107
   pull_transactions:
     cmd: python -m src.ingest.pull_transactions
     deps:
@@ -32,3 +32,39 @@ stages:
       hash: md5
       md5: b713505eda7b2deffdcfd32c501c8c68
       size: 67998
+  pull_boxscores:
+    cmd: python -m src.ingest.pull_boxscores
+    deps:
+    - path: src/ingest/pull_boxscores.py
+      hash: md5
+      md5: fea19f7ad442ce8d84637a31a3547eab
+      size: 1228
+    params:
+      params.yaml:
+        ingest.season: 2024-25
+    outs:
+    - path: data/raw/boxscores
+      hash: md5
+      md5: fcce945baa9d407d73efc170929e89f7.dir
+      size: 598394
+      nfiles: 1
+  derive_transactions:
+    cmd: python -m src.ingest.derive_transactions
+    deps:
+    - path: data/raw/boxscores
+      hash: md5
+      md5: fcce945baa9d407d73efc170929e89f7.dir
+      size: 598394
+      nfiles: 1
+    - path: src/ingest/derive_transactions.py
+      hash: md5
+      md5: 0f1d6365e63dd6812cff790507ef11d4
+      size: 3187
+    params:
+      params.yaml:
+        ingest.season: 2024-25
+    outs:
+    - path: data/raw/transactions.csv
+      hash: md5
+      md5: bd13e36b97e6013f4983c4cfbfcb3816
+      size: 81874

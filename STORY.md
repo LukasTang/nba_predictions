@@ -55,6 +55,37 @@ geworden; `dvc dag` zeigt die Verkettung. Damit steht die Grundlage für echten 
 
 ---
 
+## 2026-06-02 — Transactions aus Game-Logs *abgeleitet* (statt gescraped)
+
+**Auslöser:** Frage im Review — „Transactions sollte man doch aus den Rosters
+reproduzieren können: Spieler spielt bis Spiel 3 bei Team X, ab Spiel 4 bei Team Y?"
+Berechtigt: der erste Scraper datierte alle 534 Events auf *einen* Tag (Season-Start),
+es gab also keine Mid-Season-Dynamik.
+
+**Was passiert ist:** Architektur in drei Stages aufgetrennt —
+`pull_boxscores → derive_transactions → build_rosters`.
+- `pull_boxscores`: ein `LeagueGameLog`-Call liefert **26.306 Spieler-Spiele** (569 Spieler)
+  mit Team-Zugehörigkeit pro Spiel — immutable, look-ahead-frei.
+- `derive_transactions`: kollabiert pro Spieler aufeinanderfolgende Team-Runs; jeder
+  Wechsel der `TEAM_ABBREVIATION` = ein `move`, datiert auf das **erste Spiel mit dem
+  neuen Team**. Ergebnis: **656 Events, davon 87 echte Mid-Season-Moves**.
+
+**Verifikation (Patty Mills, UTA→LAC):**
+```
+2024-10-23  season_start  UTA
+2025-02-04  move          LAC
+Roster-Check:  2025-02-03 -> UTA   |   2025-02-04 -> LAC
+```
+
+**Warum es zählt:** Die SPEC-Reihenfolge bleibt erhalten (transactions = kanonische
+Wahrheit, Rosters daraus abgeleitet) — wir füttern den Event-Log nur aus *beobachtbaren*
+Daten statt von Hand. Point-in-time ist jetzt auf echten Daten real: 107 datierte
+Roster-Snapshots über die Saison. `nba_api` hat keinen Transaktions-Feed; Game-Logs sind
+die ehrlichere, exaktere Quelle. (Caveat: erfasst nur Spieler, die gespielt haben;
+Waive vs. Saisonende nicht unterscheidbar — Roster-Snapshots würden das später ergänzen.)
+
+---
+
 <!-- Nächste Story-Anker (geplant):
 - September 2026: Win-Total-Projektionen committen — die Vor-Saison-Festlegung.
 - Oktober 2026: Season Start als Drift-Validierungs-Event, Umschalten auf inseason.

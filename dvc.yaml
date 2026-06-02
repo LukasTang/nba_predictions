@@ -1,10 +1,20 @@
 stages:
-  pull_transactions:
-    cmd: python -m src.ingest.pull_transactions
+  pull_boxscores:
+    cmd: python -m src.ingest.pull_boxscores
     deps:
-      - src/ingest/pull_transactions.py
+      - src/ingest/pull_boxscores.py
     params:
-      - ingest.roster_snapshot_season
+      - ingest.season
+    outs:
+      - data/raw/boxscores
+
+  derive_transactions:
+    cmd: python -m src.ingest.derive_transactions
+    deps:
+      - data/raw/boxscores
+      - src/ingest/derive_transactions.py
+    params:
+      - ingest.season
     outs:
       - data/raw/transactions.csv
 
