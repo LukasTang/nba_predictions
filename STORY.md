@@ -32,6 +32,29 @@ Daten-Version-Event; `dvc repro` rebaut exakt das Nötige.
 
 ---
 
+## 2026-06-02 — Pipeline läuft auf echten NBA-Daten
+
+**Auslöser:** `pull_transactions`-Stage gebaut — zieht via `nba_api`
+(`commonteamroster`) die echten Roster aller 30 Teams und schreibt sie als
+`roster_snapshot`-Events ins `transactions.csv`-Schema.
+
+**Was passiert ist:** `dvc repro` lief end-to-end: `pull_transactions → build_rosters`.
+**534 echte Spieler-Membership-Events über 30 Teams** (Saison 2024-25) wurden gezogen und
+in point-in-time Roster-Snapshots überführt — z.B. BOS mit Tatum, Brown, White, Holiday,
+Porziņģis, Horford.
+
+**Design-Entscheidung:** `nba_api` hat keinen Transaktions-Event-Feed. Statt ihn zu
+faken, seeden wir den append-only Log aus echten Roster-Snapshots. Diffs zwischen
+wiederholten (nightly/weekly) Pulls liefern später echte Trade-/Signing-/Waive-Events —
+derselbe Log, nur von einer automatisierten Quelle gefüttert.
+
+**Warum es zählt:** Die „laufende Datenquelle" der Spec ist jetzt real, nicht synthetisch.
+`transactions.csv` ist von einem `dvc add`-Artefakt zu einem echten Pipeline-**Stage-Output**
+geworden; `dvc dag` zeigt die Verkettung. Damit steht die Grundlage für echten Drift
+(Free Agency ab Juli, Season Start im Oktober).
+
+---
+
 <!-- Nächste Story-Anker (geplant):
 - September 2026: Win-Total-Projektionen committen — die Vor-Saison-Festlegung.
 - Oktober 2026: Season Start als Drift-Validierungs-Event, Umschalten auf inseason.

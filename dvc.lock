@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/raw/transactions.csv
       hash: md5
-      md5: 097567b9ff0f12a0b9451997280c2214
-      size: 801
+      md5: b713505eda7b2deffdcfd32c501c8c68
+      size: 67998
     - path: src/features/build_rosters.py
       hash: md5
       md5: b3bd82e0984c78f1f6a817bc857c4a03
@@ -14,6 +14,21 @@ stages:
     outs:
     - path: data/interim/rosters
       hash: md5
-      md5: 0c52b7e8e4db11c4d81ab3906e034871.dir
-      size: 17305
-      nfiles: 6
+      md5: a96720128b5883fdbb9b69fdaecc243d.dir
+      size: 13866
+      nfiles: 1
+  pull_transactions:
+    cmd: python -m src.ingest.pull_transactions
+    deps:
+    - path: src/ingest/pull_transactions.py
+      hash: md5
+      md5: 2326811441f23091adf6b57e03da54de
+      size: 3731
+    params:
+      params.yaml:
+        ingest.roster_snapshot_season: 2024-25
+    outs:
+    - path: data/raw/transactions.csv
+      hash: md5
+      md5: b713505eda7b2deffdcfd32c501c8c68
+      size: 67998

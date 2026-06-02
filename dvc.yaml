@@ -1,4 +1,13 @@
 stages:
+  pull_transactions:
+    cmd: python -m src.ingest.pull_transactions
+    deps:
+      - src/ingest/pull_transactions.py
+    params:
+      - ingest.roster_snapshot_season
+    outs:
+      - data/raw/transactions.csv
+
   build_rosters:
     cmd: python -m src.features.build_rosters
     deps:
