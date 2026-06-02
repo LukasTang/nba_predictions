@@ -1,0 +1,17 @@
+mode: offseason          # offseason | inseason
+season: "2026-27"
+ratings:
+  metric: bpm            # box-score-basiert zum Start, EPM/RAPM später
+minutes:
+  source: depth_chart
+transfer:
+  context_light: [reb, ts_pct]
+  context_heavy: [ast, plus_minus]
+  regression_to_mean: 0.4
+  uncertainty_inflation: 1.5
+model:
+  type: gradient_boosting
+  target: win_prob       # offseason: win_total
+promotion:
+  metric: brier_score    # inseason; offseason: win_total_mae_vs_vegas
+  min_improvement: 0.005
